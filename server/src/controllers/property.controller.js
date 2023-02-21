@@ -29,11 +29,10 @@ export default {
 		try {
 			const count = await Property.countDocuments({ query });
 			const properties = await Property.find(query)
-				.limit(_end)
-				.skip(_start)
+				.limit(_start)
+				.skip(_end)
 				.sort({ [_sort]: _order });
-
-			res.header('x-total-count', count);
+			res.header('x-total-count', String(count));
 			res.header('Access-Control-Expose-Headers', 'x-total-count');
 			res.status(200).json(properties);
 		} catch (err) {
@@ -110,7 +109,7 @@ export default {
 			session.startTransaction();
 			propertyToDelete.remove({ session });
 			propertyToDelete.creator.allProperties.pull(propertyToDelete);
-			await propertyToDelete.creator.save({ session });
+			await propertyToDelete.creator?.save({ session });
 			await session.commitTransaction();
 
 			res.status(200).json({ message: 'Property deleted successfully' });

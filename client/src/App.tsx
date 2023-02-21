@@ -35,6 +35,13 @@ import { parseJwt } from 'utils/parse-jwt';
 
 const axiosInstance = axios.create();
 
+let targetUrl: string;
+if (process.env.NODE_ENV === 'production') {
+	targetUrl = 'https://real-estate-dashboard.onrender.com/api/v1';
+} else {
+	targetUrl = 'http://localhost:8080/api/v1';
+}
+
 axiosInstance.interceptors.request.use((request: AxiosRequestConfig) => {
 	const token = localStorage.getItem('token');
 	if (request.headers) {
@@ -54,7 +61,7 @@ function App() {
 
 			if (profileObj) {
 				// Save the user to our own database
-				const response = await fetch('https://real-estate-dashboard.onrender.com/api/v1/users', {
+				const response = await fetch(`${targetUrl}/users`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({
@@ -117,7 +124,7 @@ function App() {
 			<GlobalStyles styles={{ html: { WebkitFontSmoothing: 'auto' } }} />
 			<RefineSnackbarProvider>
 				<Refine
-					dataProvider={dataProvider('https://real-estate-dashboard.onrender.com/api/v1')}
+					dataProvider={dataProvider(targetUrl)}
 					notificationProvider={notificationProvider}
 					ReadyPage={ReadyPage}
 					catchAll={<ErrorComponent />}

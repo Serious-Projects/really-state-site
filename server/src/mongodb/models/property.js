@@ -1,4 +1,4 @@
-import mongoose, { Types } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 const PropertySchema = new mongoose.Schema({
 	title: { type: String, required: true },
@@ -7,7 +7,7 @@ const PropertySchema = new mongoose.Schema({
 	location: { type: String, required: true },
 	price: { type: Number, required: true },
 	photo: { type: String, required: true },
-	creator: { type: Types.ObjectId, ref: 'User' },
+	creator: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 
 const userModel = mongoose.model('Property', PropertySchema);

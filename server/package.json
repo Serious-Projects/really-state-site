@@ -2,13 +2,12 @@
 	"name": "server",
 	"version": "1.0.0",
 	"description": "Backend server for our property sales website",
-	"main": "index.js",
-	"type": "module",
+	"main": "./src/index.ts",
 	"author": "Ayush Dedhia <ayushdedhia25 @ gmail.com>",
 	"license": "ISC",
 	"scripts": {
-		"dev": "nodemon ./index.js",
-		"start": "node ./index.js"
+		"dev": "concurrently \"npx tsc -w\" \"nodemon ./dist/index.js\"",
+		"start": "node ./dist/index.js"
 	},
 	"keywords": [],
 	"dependencies": {
@@ -16,9 +15,18 @@
 		"cors": "^2.8.5",
 		"dotenv": "^16.0.3",
 		"express": "^4.18.2",
-		"mongoose": "^6.9.1"
+		"mongoose": "^6.9.1",
+		"typescript": "^4.9.5"
 	},
 	"devDependencies": {
-		"nodemon": "^2.0.20"
+		"@types/cors": "^2.8.13",
+		"@types/dotenv": "^8.2.0",
+		"@types/express": "^4.17.17",
+		"@types/mongoose": "^5.11.97",
+		"@types/node": "^18.14.0",
+		"concurrently": "^7.6.0",
+		"nodemon": "^2.0.20",
+		"ts-node": "^10.9.1",
+		"tslint": "^6.1.3"
 	}
 }
